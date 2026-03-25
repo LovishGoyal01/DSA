@@ -15,7 +15,7 @@ public:
       if(noB>=m) return 1;
        return 0;
     }
-    vector<int>mini(vector<int>bloomDay){
+    vector<int>mini(vector<int>& bloomDay){
         int maxv=INT_MIN;
         int minv=INT_MAX;
         for(int i=0;i<bloomDay.size();i++){
@@ -27,7 +27,7 @@ public:
 
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n=bloomDay.size();
-        if(n<m*k) return -1;
+        if(n < (long long)m * k) return -1;
         auto it=mini(bloomDay);
         int low = it[0];
         int high = it[1];
