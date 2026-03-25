@@ -26,11 +26,12 @@ public:
     }
 
     int minDays(vector<int>& bloomDay, int m, int k) {
+        int n=bloomDay.size();
+        if(n<m*k) return -1;
         auto it=mini(bloomDay);
         int low = it[0];
         int high = it[1];
-        int ans=-1;
-        int n=bloomDay.size();
+        int ans=high;
         int mid=0;
         while(low<=high){
             mid=(low+high)/2;
