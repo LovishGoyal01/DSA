@@ -6,7 +6,7 @@ public:
             return;
         }
         for(int i = index ; i<candidates.size();i++){
-            if(i>index && candidates[i]==candidates[i-1]) continue;
+            if(i!=index && candidates[i]==candidates[i-1]) continue;
             if(candidates[i]>target) break;
              arr.push_back(candidates[i]);
              rec(candidates,i+1,target-candidates[i],ans,arr);
