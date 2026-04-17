@@ -8,7 +8,6 @@ public:
             arr.push_back(nums[i]);
             rec(nums,i+1,arr,ans);
             arr.pop_back();
-           // rec(nums,i+1,arr,ans);
         }
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
