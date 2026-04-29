@@ -20,11 +20,9 @@ public:
         // build string
         string str = "";
         while(!st.empty()){
-            str += st.top();
+            str = st.top() + str;
             st.pop();
         }
-
-        reverse(str.begin(), str.end());
 
         // remove leading zeros
         int i = 0;
