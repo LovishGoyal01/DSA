@@ -1,38 +1,25 @@
 class Solution {
 public:
-   
-    int findmax(vector<int>piles){
-        int maxi=0;
-        for(int i=0;i<piles.size();i++){
-            maxi=max(maxi,piles[i]);
+    int calc(vector<int>& arr,int mid, int h){
+        long long total=0;
+        for(int i=0;i<arr.size();i++){
+            total+=ceil((double)arr[i]/mid);
         }
-        return maxi;
+        if(total<=h) return 1;
+        return 0;
     }
 
-    int calc(vector<int>& piles, int h, int mid){
-      long long count = 0;
-
-      for(int i = 0; i < piles.size(); i++){
-        count += ceil(double(piles[i])/double(mid));
-      }
-
-      if(count > h) return -1;   
-      return 1;                  
-    }
-
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int n=piles.size();
+    int minEatingSpeed(vector<int>& arr, int h) {
+        int n=arr.size();
         int low=1;
-        int high=findmax(piles);
-        int mid=0,ans=-1;
+        int high=*max_element(arr.begin(),arr.end());
+        int mid,ans;
         while(low<=high){
             mid=(low+high)/2;
-            int v = calc(piles,h,mid);
-            if(v==1){
+            if(calc(arr,mid,h)==1){
                 high=mid-1;
                 ans=mid;
-            }
-            else low=mid+1;
+            }else low=mid+1;
         }
         return ans;
     }
