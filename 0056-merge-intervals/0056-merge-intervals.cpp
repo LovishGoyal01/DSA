@@ -3,20 +3,13 @@ public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
       sort(intervals.begin(),intervals.end());
       vector<vector<int>> ans;
-      int pre=-1,post=-1;
       for(int i=0;i<intervals.size();i++){
-        if(pre==-1){
-            pre=intervals[i][0];
-            post=intervals[i][1];
-        }else if(intervals[i][0]<=post){
-            post=max(post,intervals[i][1]);
+        if(ans.empty() || ans.back()[1]<intervals[i][0]){
+            ans.push_back(intervals[i]);
         }else{
-            ans.push_back({pre,post});
-            pre=intervals[i][0];
-            post=intervals[i][1];
-        } 
+            ans.back()[1]=max(ans.back()[1],intervals[i][1]);
+        }
       }
-      ans.push_back({pre,post});
       return ans;   
     }
 };
