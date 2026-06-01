@@ -1,47 +1,29 @@
 class Solution {
 public:
-    
-    int findMaxIndex(vector<vector<int>>& mat, int n, int col) {
-    int maxValue = INT_MIN;
-    int index = -1;
-
-    for(int i = 0; i < n; i++){
-        if(mat[i][col] > maxValue){
-            maxValue = mat[i][col];
-            index = i;
+    int findmax(vector<vector<int>>& matrix,int mid){
+        int maxi=-1,index=-1;
+        for(int i=0;i<matrix.size();i++){
+            if(maxi<matrix[i][mid]){
+                index=i;
+                maxi=matrix[i][mid];
+            }
         }
-    }
-    return index;
-}
-
-vector<int> findPeakGrid(vector<vector<int>>& mat) {
-    int n = mat.size();
-    int m = mat[0].size();
-
-    int low = 0, high = m - 1;
-
-    while(low <= high){
-        int mid = low + (high - low) / 2;
-
-        int maxRowIndex = findMaxIndex(mat, n, mid);
-
-        int left = (mid - 1 >= 0) ? mat[maxRowIndex][mid - 1] : -1;
-        int right = (mid + 1 < m) ? mat[maxRowIndex][mid + 1] : -1;
-
-        // Found peak
-        if(mat[maxRowIndex][mid] > left && mat[maxRowIndex][mid] > right){
-            return {maxRowIndex, mid};
-        }
-        // Move left
-        else if(mat[maxRowIndex][mid] < left){
-            high = mid - 1;
-        }
-        // Move right
-        else{
-            low = mid + 1;
-        }
+        return index;
     }
 
-    return {-1, -1};
-  }
+    vector<int> findPeakGrid(vector<vector<int>>& matrix) {
+      int m=matrix[0].size();  
+      int low=0;
+      int high=m-1,mid,left,right,maxelR;  
+      while(low<=high){
+        mid=(low+high)/2;
+        maxelR=findmax(matrix,mid);
+        left= mid-1>=0? matrix[maxelR][mid-1] : -1;
+        right= mid+1<m? matrix[maxelR][mid+1] : -1;
+        if(matrix[maxelR][mid]>left && matrix[maxelR][mid]>right) return{maxelR,mid};
+        else if(matrix[maxelR][mid]>left) low=mid+1;
+        else high=mid-1;
+      }
+      return {-1,-1};
+    }
 };
