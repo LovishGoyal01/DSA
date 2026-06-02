@@ -1,38 +1,24 @@
 class Solution {
 public:
-    int sign = 1;
-
-    long long rec(string &s, int i, long long ans, bool started) {
-        if (i >= s.size()) return ans;
-
-        // skip leading spaces
-        if (!started && s[i] == ' ')
-            return rec(s, i + 1, ans, false);
-
-        // sign handling
-        if (!started && (s[i] == '+' || s[i] == '-')) {
-            sign = (s[i] == '-') ? -1 : 1;
-            return rec(s, i + 1, ans, true);
-        }
-
-        // digit processing
-        if (isdigit(s[i])) {
-            started = true;
-            ans = ans * 10 + (s[i] - '0');
-
-            // overflow check
-            if (sign == 1 && ans > INT_MAX) return INT_MAX;
-            if (sign == -1 && -ans < INT_MIN) return INT_MIN;
-
-            return rec(s, i + 1, ans, true);
-        }
-
-        // stop if non-digit
-        return ans;
-    }
-
     int myAtoi(string s) {
-        long long ans = rec(s, 0, 0, false);
-        return sign * ans;
+        int i=0,sign=1;
+        int n=s.size();
+        while(i<n && s[i]==' ') i++;
+        if(i<n && (s[i]=='+' || s[i]=='-')){
+            if(s[i]=='-') sign=-1;
+            i++;
+        }
+        long long ans=0,digit;
+        while(i<n && (s[i]>='0' && s[i]<='9')){
+            digit=s[i]-'0';
+            ans=ans*10 + digit;
+            if(sign * ans > INT_MAX)
+                return INT_MAX;
+
+            if(sign * ans < INT_MIN)
+                return INT_MIN;
+            i++;
+        }
+        return sign*ans;
     }
 };
