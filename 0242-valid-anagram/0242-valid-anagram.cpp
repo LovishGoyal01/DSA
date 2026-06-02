@@ -4,14 +4,12 @@ public:
         if(s.size() != t.size()) return false;
 
         map<char,int> mpp;
-
-        for(int i = 0; i < s.size(); i++) {
+        for(int i=0;i<s.size();i++){
             mpp[s[i]]++;
             mpp[t[i]]--;
         }
-
-        for(auto it : mpp) {
-            if(it.second != 0) return false;
+        for(auto it:mpp){
+            if(it.second!=0) return false;
         }
 
         return true;
