@@ -12,31 +12,14 @@ class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
      if(head==nullptr || head->next==nullptr) return head;
-     ListNode* first = nullptr;
-     ListNode* second = nullptr;
+     ListNode* first = head;
+     ListNode* second = head->next;
      ListNode* secondH = head->next;
-     ListNode* curr = head; 
-     int cnt=0;
-     while(curr!=nullptr){
-        cnt++;
-       if(cnt%2==1){
-          if(cnt==1){
-           first=curr;
-          }else{
-            first->next=curr;
-            first=first->next;
-          } 
-          curr=curr->next;
-       }else{
-          if(cnt==2){
-           second=curr;
-          }else{
-            second->next=curr;
-            second=second->next;
-          }
-           curr=curr->next;
-           second->next=nullptr;
-       }
+     while(second!=nullptr && second->next!=nullptr){
+      first->next=first->next->next;
+      second->next=second->next->next;
+      first=first->next;
+      second=second->next;
      }  
      first->next=secondH;
      return head;
