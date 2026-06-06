@@ -4,32 +4,33 @@ public:
         stack<char> st;
 
         for(char ch : num){
-            while(!st.empty() && k > 0 && st.top() > ch){
+            while(!st.empty() && st.top() > ch && k > 0){
                 st.pop();
                 k--;
             }
             st.push(ch);
         }
 
-        // remove remaining k digits from end
-        while(k > 0 && !st.empty()){
+        while(k > 0){
             st.pop();
             k--;
         }
 
-        // build string
-        string str = "";
+        string ans;
         while(!st.empty()){
-            str = st.top() + str;
+            ans.push_back(st.top());
             st.pop();
         }
 
-        // remove leading zeros
+        reverse(ans.begin(), ans.end());
+
         int i = 0;
-        while(i < str.size() && str[i] == '0') i++;
+        while(i < ans.size() && ans[i] == '0')
+            i++;
 
-        str = str.substr(i);
+        if(i == ans.size())
+            return "0";
 
-        return str.empty() ? "0" : str;
+        return ans.substr(i);
     }
 };
