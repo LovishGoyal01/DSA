@@ -16,7 +16,7 @@ public:
     }
 
     int minDays(vector<int>& arr, int m, int k) {
-        int low=1;
+        int low=*min_element(arr.begin(),arr.end());
         int high=*max_element(arr.begin(),arr.end());
         int mid,ans=-1;
         while(low<=high){
