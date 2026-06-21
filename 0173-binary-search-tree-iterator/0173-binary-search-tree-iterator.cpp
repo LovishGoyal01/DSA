@@ -10,27 +10,24 @@
  * };
  */
 class BSTIterator {
-
-private:
+private: 
     void pushall(TreeNode* root){
         while(root){
             st.push(root);
             root=root->left;
         }
-    }
-
+    }    
 public:
-    stack<TreeNode*>st;
-
+    stack<TreeNode*> st;
     BSTIterator(TreeNode* root) {
-        pushall(root);
+         pushall(root);
     }
     
     int next() {
-        TreeNode* node=st.top();
-        st.pop();
-        pushall(node->right);
-        return node->val;
+      TreeNode* node = st.top();
+       st.pop();
+      pushall(node->right);
+      return node->val;   
     }
     
     bool hasNext() {
