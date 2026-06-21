@@ -11,23 +11,16 @@
  */
 class Solution {
 public:
-
-    TreeNode* ans(vector<int>& preorder,int i,int j){
-        if(i>j) return nullptr;
-        int rightStart=j+1;
-        for(int k=i+1;k<=j;k++){
-            if(preorder[k]>preorder[i]){
-                rightStart = k;
-                break;
-            }
-        }
-       TreeNode* node = new TreeNode(preorder[i]); 
-       node->left =  ans(preorder,i+1,rightStart-1);
-       node->right = ans(preorder,rightStart,j);
-       return node;
-    }
-
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        return ans(preorder,0,preorder.size()-1);
+        int i=0;
+        return create(preorder,i,INT_MAX);
+    }
+    TreeNode* create(vector<int>& preorder,int& i,int ub)
+    {   if(i==preorder.size() || preorder[i]>ub ) return nullptr;
+        TreeNode* Node = new TreeNode(preorder[i]);
+         i++; 
+        Node->left = create(preorder,i,Node->val);
+        Node->right = create(preorder,i,ub);
+        return Node;
     }
 };
