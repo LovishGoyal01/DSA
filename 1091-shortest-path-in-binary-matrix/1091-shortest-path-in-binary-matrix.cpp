@@ -1,40 +1,32 @@
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        int nr = grid.size();
-        int nc = grid[0].size();
-        if(grid[0][0] == 1 || grid[nr-1][nc-1] == 1)
-            return -1;
-        if(nr==1 && nc==1)
-        return 1;    
-
-        queue<pair<int,pair<int,int>>>q;
-        vector<vector<int>>dist(nr,vector<int>(nc,1e9));
-        q.push({1,{0,0}});
-
-        int dr[8] = {-1,-1,-1,0,0,1,1,1};
-        int dc[8] = {-1,0,1,-1,1,-1,0,1};
-
-        dist[0][0] = 1; 
-
+        queue<pair<int,pair<int,int>>> q;
+        int n= grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>dist(n,vector<int>(m,INT_MAX));
+        int dr[8]= {1,1,1,0,0,-1,-1,-1};
+        int dc[8]= {1,0,-1,1,-1,1,0,-1};
+        if(grid[0][0]!=0) return -1;
+        q.push({0,{0,0}});
+        dist[0][0]=0;
         while(!q.empty()){
-            auto it = q.front();
+            int wt = q.front().first;
+            int r = q.front().second.first;
+            int c = q.front().second.second;
             q.pop();
-            int dis = it.first;
-            int r = it.second.first;
-            int c = it.second.second;
-
-            for(int i=0;i<8;i++){
-             int row = r + dr[i];
-             int col = c + dc[i];
-             if(row>=0 && col>=0 && row<nr && col<nc && grid[row][col]==0 && dist[row][col]>1+dis){
-                if(row==nr-1 && col==nc-1) return 1+dis;
-                dist[row][col]=1+dis;
-                q.push({1+dis,{row,col}});
-             }
-            }
-            
+            if(r==n-1 && c==m-1) return wt+1;
+            else {
+                for(int i=0;i<8;i++){
+                int nr = r + dr[i];
+                int nc = c + dc[i];
+                if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==0 && dist[nr][nc]> 1+wt){
+                    q.push({wt+1,{nr,nc}});
+                    dist[nr][nc]=1+wt;
+                }
+              }
+            }       
         }
-       return -1;
+        return -1;
     }
 };
