@@ -6,7 +6,7 @@ public:
         for(auto it : times ){
             adj[it[0]].push_back({it[1],it[2]});
         }
-        priority_queue<pair<int,int>>q;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
         q.push({0,k});
         vis[k]=0;
         vis[0]=0;
@@ -14,6 +14,7 @@ public:
             int node = q.top().second;
             int time = q.top().first;
             q.pop();
+            if(time>vis[node]) continue;
             for(auto it: adj[node]){
                 int adjnode = it.first;
                 int dist = it.second;
