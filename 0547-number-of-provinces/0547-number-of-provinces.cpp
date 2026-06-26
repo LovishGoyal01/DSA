@@ -1,31 +1,58 @@
+class DisjointSets{
+    vector<int> parent,size;
+    public:
+
+    DisjointSets(int n){
+        size.resize(n+1,1);
+        parent.resize(n+1);
+        for(int i=0;i<n+1;i++) parent[i]=i;
+    }
+
+    int findUpar(int u){
+        if(parent[u]==u) return u;
+        return parent[u] = findUpar(parent[u]);
+    }
+
+    void unionBysize(int u,int v){
+        int ulp_u = findUpar(u);
+        int ulp_v = findUpar(v);
+        if(ulp_u == ulp_v) return;
+        if(size[ulp_u]<size[ulp_v]){
+            parent[ulp_u]=ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }else{
+            parent[ulp_v]=ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+};
+
 class Solution {
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int n= isConnected.size();
-        vector<bool>vis(n,false);
-        int cnt=0;
+        int n = isConnected.size();
+        DisjointSets ds(n);
+        vector<pair<int,int>>edges;
         for(int i=0;i<n;i++){
-            if(!vis[i]){
-                  calc(isConnected,vis,i);
-                  cnt++;
+          int v=1;  
+          for(auto it :isConnected[i]){
+            int u=i+1;
+            if(it==1) edges.push_back({u,v});
+            v++;
+          } 
+        }
+       // sort(edges.begin(),edges.end());
+        for(auto it:edges){
+            int u = it.first;
+            int v = it.second;
+            if(ds.findUpar(u)!=ds.findUpar(v)){
+                ds.unionBysize(u,v);
             }
         }
+        int cnt=0;
+        for(int i=1;i<n+1;i++){
+            if(ds.findUpar(i)==i) cnt++;
+        }  
         return cnt;
-    }
-
-    void calc(vector<vector<int>>& isConnected,vector<bool>& vis,int node){
-       int n=isConnected.size();
-        vis[node]=true;
-        queue<int>q;
-        q.push(node);
-        while(!q.empty()){
-            int root=q.front(); q.pop();
-            for(int i=0;i<n;i++){
-                if(!vis[i] && isConnected[root][i]){
-                    q.push(i);
-                    vis[i]=true;
-                }
-            }
-        }
     }
 };
