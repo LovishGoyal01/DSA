@@ -5,7 +5,7 @@ public:
         if(dp[index]!=-1) return dp[index];
         int jump=0,maxA=INT_MIN;
         for(int j=index-2;j>=0;j--){
-            if(j>=0) jump = robber(j,nums,dp) + nums[index];
+            jump = robber(j,nums,dp) + nums[index];
             maxA=max(maxA,jump);
         }
         return dp[index]=maxA;
