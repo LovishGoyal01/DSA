@@ -10,8 +10,7 @@ public:
         int s=intervals[0][0];
         int e=intervals[0][1];
         int cnt=0;
-        for(int i=1;
-        i<intervals.size();i++){
+        for(int i=1;i<intervals.size();i++){
             if(intervals[i][0]<e) cnt++;
             else e=intervals[i][1];
         }
