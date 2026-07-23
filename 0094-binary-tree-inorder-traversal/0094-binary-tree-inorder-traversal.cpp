@@ -11,51 +11,22 @@
  */
 class Solution {
 public:
-    void traverse(TreeNode* root,vector<int>& ans){
-        if(root==nullptr) return;
-        traverse(root->left,ans);
-        ans.push_back(root->val);
-        traverse(root->right,ans);
-    }
     vector<int> inorderTraversal(TreeNode* root) {
+       stack<TreeNode *>st;
+       if(root==nullptr) return {};
        vector<int> ans;
-        traverse(root,ans);
-        return ans;   
+       TreeNode* node = root;
+       while(true){
+          if(node!=nullptr){
+            st.push(node);
+            node=node->left;
+          }else{
+            if(st.empty()) break;
+            node = st.top(); st.pop();
+            ans.push_back(node->val);
+            node=node->right;
+          }
+       } 
+       return ans;
     }
-
-    // vector<int> inorderTraversal(TreeNode* root) {
-    //         vector<int> inorder;
-    //     TreeNode* cur = root;
-
-    //     while (cur != NULL) {
-
-    //         // Case 1: No left child
-    //         if (cur->left == NULL) {
-    //             inorder.push_back(cur->val);
-    //             cur = cur->right;
-    //         }
-    //         // Case 2: Left child exists
-    //         else {
-    //             TreeNode* prev = cur->left;
-
-    //             // Find inorder predecessor
-    //             while (prev->right != NULL && prev->right != cur) {
-    //                 prev = prev->right;
-    //             }
-
-    //             // Create thread
-    //             if (prev->right == NULL) {
-    //                 prev->right = cur;
-    //                 cur = cur->left;
-    //             }
-    //             // Remove thread
-    //             else {
-    //                 prev->right = NULL;
-    //                 inorder.push_back(cur->val);
-    //                 cur = cur->right;
-    //             }
-    //         }
-    //     }
-    //     return inorder;
-    // }
 };
