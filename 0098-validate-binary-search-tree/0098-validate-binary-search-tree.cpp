@@ -12,13 +12,13 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        return isValid(root,LONG_MAX,LONG_MIN);
+        return check(root,LONG_MIN,LONG_MAX);
     }
-
-    bool isValid(TreeNode* root,long maxR,long minR) {
+    bool check(TreeNode* root, long long mini,long long maxi){
         if(root==nullptr) return true;
-        if(root->val<=minR || root->val>=maxR) return false;
-        return isValid(root->left,root->val,minR) 
-              && isValid(root->right,maxR,root->val);
+
+        if(root->val<=mini || root->val>=maxi) return false;
+        
+        return check(root->left,mini,root->val) && check(root->right,root->val,maxi);
     }
 };
