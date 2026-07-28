@@ -12,20 +12,20 @@
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        int count=0;
-        return pre(root,k,count);
+           int count=0,val=-1;
+           ans(root,k,count,val);
+           return val;
     }
-    int pre(TreeNode* root,int k,int& count){
-        if(root==nullptr) return -1;
-        int ans1 = pre(root->left,k,count);
-        if(ans1!=-1) return ans1;
-
+    void ans(TreeNode* root, int k,int& count,int &val){
+        if(root==nullptr) return;
+        ans(root->left,k,count,val);
         count++;
-        if(count==k) return root->val;
-
-        int ans2= pre(root->right,k,count);
-        if(ans2!=-1) return ans2;
-        return -1;
-
+        if(count==k){
+           val=root->val;
+            return;
+        }
+        if(val==-1) ans(root->right,k,count,val);
+        
     }
+
 };
