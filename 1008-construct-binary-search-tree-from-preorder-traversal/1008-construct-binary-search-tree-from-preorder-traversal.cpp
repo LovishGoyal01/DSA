@@ -16,11 +16,11 @@ public:
         return create(preorder,i,INT_MAX);
     }
     TreeNode* create(vector<int>& preorder,int& i,int ub)
-    {   if(i==preorder.size() || preorder[i]>ub ) return nullptr;
-        TreeNode* Node = new TreeNode(preorder[i]);
-         i++; 
-        Node->left = create(preorder,i,Node->val);
-        Node->right = create(preorder,i,ub);
-        return Node;
+    {   
+        if(i==preorder.size() || preorder[i]>ub) return nullptr;
+        TreeNode* temp = new TreeNode(preorder[i++]);
+        temp->left = create(preorder,i,temp->val);
+         temp->right = create(preorder,i,ub);
+         return temp;
     }
 };
