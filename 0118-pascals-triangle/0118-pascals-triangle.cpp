@@ -1,15 +1,15 @@
 class Solution {
 public:
     vector<int> pascal(int row){
-     int val=1;
-     vector<int>ans;
-     ans.push_back(val);
+     int ans=1;
+     vector<int>arr;
+     arr.push_back(ans);
      for(int col=1;col<row;col++){
-        val=val*(row-col);
-        val=val/col;
-        ans.push_back(val);
+        ans*= (row-col);
+        ans/= col;
+        arr.push_back(ans); 
      }
-     return ans;
+     return arr;
     }
 
     vector<vector<int>> generate(int numRows) {
