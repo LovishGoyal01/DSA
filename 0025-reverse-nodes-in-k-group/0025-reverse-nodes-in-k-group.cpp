@@ -10,57 +10,50 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
-        ListNode* prev = nullptr;
-        ListNode* curr = head;
 
-        while (curr != nullptr) {
-            ListNode* next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
-
-    ListNode* getKthNode(ListNode* temp, int k) {
-          k--;
-        while (temp != nullptr && k > 0) {
-            temp = temp->next;
+    ListNode* getKNode(ListNode* temp, int k) {
+        while(temp!=nullptr && k>1){
+            temp=temp->next;
             k--;
         }
         return temp;
     }
 
-    ListNode* reverseKGroup(ListNode* head, int k) {
-        if (!head || k == 1) return head;
-
-        ListNode* temp = head;
-        ListNode* prevLast = nullptr;
-
-        while (temp != nullptr) {
-            ListNode* kThNode = getKthNode(temp, k);
-
-            if (kThNode == nullptr) {
-                if (prevLast) prevLast->next = temp;
-                break;
-            }
-
-            ListNode* nextNode = kThNode->next;
-            kThNode->next = nullptr; 
-
-            reverseList(temp);
-
-            if (temp == head) {
-                head = kThNode;
-            } else {
-                prevLast->next = kThNode;
-            }
-
-            prevLast = temp;
-            temp = nextNode;
+    ListNode* ReverseList(ListNode* temp) {
+        ListNode* prev  = nullptr;
+        ListNode* nextNode = nullptr;
+        while(temp!=nullptr){
+          nextNode = temp->next;
+          temp->next = prev;
+          prev = temp;
+          temp = nextNode;
         }
+        return prev;
+    }
 
+    ListNode* reverseKGroup(ListNode* head,int k) {
+        ListNode* curr = head;
+        ListNode* KthNode = nullptr;
+        ListNode* prevLast = nullptr;
+        while(curr!=nullptr){
+           KthNode = getKNode(curr,k);
+           if(KthNode==nullptr){
+            if(prevLast) prevLast->next = curr;
+             break;
+           }
+           
+           ListNode* nextN = KthNode->next;
+           KthNode->next = nullptr;
+           ReverseList(curr);
+
+           if(curr==head){
+             head = KthNode;
+           }else{
+             prevLast ->next = KthNode;
+           }
+           prevLast = curr;
+           curr = nextN;
+        }
         return head;
     }
 };
