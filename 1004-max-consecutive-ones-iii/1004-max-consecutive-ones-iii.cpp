@@ -6,15 +6,14 @@ public:
         int n=arr.size();
        
         for(int i=0;i<n;i++){
-            if(arr[i]==0){
-                nz++;
-            }
+            if(arr[i]==0) nz++;
             if(nz>k){
                 if(arr[l]==0) nz--;
                 l++;
             }
-             maxi=max(maxi,i-l+1);
+            if(nz<=k) maxi = max(maxi,i-l+1);
         }
+
         return maxi;
     }
 };
