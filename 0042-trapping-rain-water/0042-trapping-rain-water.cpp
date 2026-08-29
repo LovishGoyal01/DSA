@@ -1,24 +1,33 @@
 class Solution {
 public:
-    vector<int> rightMax(vector<int>& arr){
-        int n=arr.size();
-        vector<int> ans(n,-1);
-        ans[n-1]=arr[n-1];
-        for(int i=n-2;i>=0;i--){
-            if(arr[i]>=ans[i+1]) ans[i]=arr[i];
-            else ans[i]=ans[i+1];
-        }
-        return ans;
+    void nge(vector<int>& height,vector<int>& ng){
+       int n = height.size();
+       int mx = height[n-1];
+       for(int i=n-1;i>=0;i--){
+         mx = max(height[i],mx);
+         ng[i] = mx;
+       }
     }
-    int trap(vector<int>& heights) {
-        int n=heights.size();
-        int prevmax=-1,maxi,total=0;
-        vector<int>ans=rightMax(heights);
-        for(int i=0;i<n-1;i++){
-            if(prevmax<heights[i]) prevmax=heights[i];
-           maxi=min(prevmax,ans[i]);
-           if(maxi>heights[i]) total += maxi - heights[i];
+
+    void pge(vector<int>& height,vector<int>& pg){
+       int n = height.size();
+       int mx = height[0];
+       for(int i=0;i<n;i++){
+        mx = max(height[i],mx);
+         pg[i] = mx;
+       }
+    }
+
+    int trap(vector<int>& height) {
+        int n = height.size();
+        vector<int>ng(n,0);
+        vector<int>pg(n,0);
+        nge(height,ng);
+        pge(height,pg);
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum+= min(ng[i],pg[i]) - height[i];
         }
-        return total;
+        return sum;
     }
 };
