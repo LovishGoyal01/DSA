@@ -39,7 +39,6 @@ public:
             long long right = nse[i] - i;
             total = (total + (left * right % mod) * arr[i] % mod) % mod;
         }
-
         return total;
     }
 };
