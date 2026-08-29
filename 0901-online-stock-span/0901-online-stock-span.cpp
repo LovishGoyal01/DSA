@@ -8,7 +8,7 @@ public:
     
     int next(int price) {
         index++;
-        while(!st.empty() && st.top().first <= price) st.pop();
+        while(!st.empty() && st.top().first <= price) st.pop(); // pge
         int ans = index - (st.empty()?-1:st.top().second);
         st.push({price,index});
         return ans;
