@@ -1,12 +1,10 @@
+# Write your MySQL query statement below
 with cte as
-(SELECT person_name,
-       weight,
-         SUM(weight) OVER (ORDER BY turn) AS cumulative_weight
-FROM Queue q
-ORDER BY turn)
+(select *, sum(weight) over(order by turn asc) as wb
+from Queue)
 
-select person_name
+select person_name 
 from cte 
-where cumulative_weight <=1000
-order by cumulative_weight desc
-limit 1;
+where wb<=1000
+order by wb desc
+limit 1
